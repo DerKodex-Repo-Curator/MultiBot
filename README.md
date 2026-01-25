@@ -65,7 +65,7 @@ A per-room notebook saved to disk that is **never sent to agents** unless you pa
 - Passwords and API keys (though we recommend a proper vault)
 - Reminders to yourself
 
-### Routing & Isolation (The "Routing Law")
+### Routing & Isolation  
 
 MultiBot enforces **who can see whom** at the transcript and context-construction level.
 

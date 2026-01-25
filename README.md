@@ -25,7 +25,7 @@ MultiBot is designed for the open-source / hobbyist ecosystem and is **Ollama-fi
 <img width="1149" height="777" alt="multibot-5" src="https://github.com/user-attachments/assets/75f52112-e15a-4b6b-bc97-80f08eb24bbf" />
 
 ### Running a MultiBot program (text adventure)
-<img width="1142" height="825" alt="multibot-2" src="https://github.com/user-attachments/assets/a9d72ad8-a33c-48c2-9316-a63a60114405" />
+<img width="1146" height="774" alt="multibot-6" src="https://github.com/user-attachments/assets/452004c7-930c-42d9-8174-db1379c087a9" />
 
 ## Core Concepts
 

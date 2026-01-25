@@ -1,6 +1,6 @@
 # MultiBot 1.0 by Underground AI
 
-A local-first, multi-agent LLM living room with explicit routing and persistent state.
+A local-first, multi-agent LLM "living room" with explicit routing and persistent state.
 
 ## What This Is
 

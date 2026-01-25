@@ -1,0 +1,81 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ===== Virtual environments =====
+.venv/
+venv/
+ENV/
+env/
+
+# ===== Local environment / secrets =====
+.env
+.env.*
+*.key
+*.pem
+secrets.*
+config.local.*
+settings.local.*
+
+# ===== Logs / runtime artifacts =====
+*.log
+logs/
+AIIR_log.txt
+*.sqlite
+*.db
+
+# ===== OS / editor junk =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ===== Node / frontend build artifacts (if any) =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== Large binaries / generated media =====
+*.wav
+*.flac
+*.aiff
+*.mp3
+*.mp4
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+
+# (If you WANT to keep some images like screenshots, remove the image lines above
+# and instead ignore only a folder like:)
+# generated_images/
+# outputs/
+
+# ===== Export / generated graph data (optional) =====
+exports/
+out/
+output/
+tmp/
+
+# ===== Ollama / local model cache (usually not inside repo, but just in case) =====
+.ollama/

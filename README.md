@@ -1,148 +1,117 @@
 # MultiBot 1.0
 
-*A local-first, multi-agent LLM living room with explicit routing and persistent state*
+A local-first, multi-agent LLM living room with explicit routing and persistent state.
 
-**MultiBot** is a lightweight, retro green-terminal web app for running multiple large-language-model agents together in a shared **living room**, where memory, identity, and communication rules persist over time.
+## What This Is
 
-Unlike typical “multi-agent demos,” MultiBot makes **routing explicit and enforceable**: you can see, edit, and audit who can talk to whom — live — using either commands or an interactive graph editor.
+MultiBot is a lightweight, retro green-terminal web app for running multiple large-language-model agents together in a shared **living room**, where memory, identity, and communication rules persist over time.
+
+Unlike typical "multi-agent demos," MultiBot makes **routing explicit and enforceable**: you can see, edit, and audit who can talk to whom — live — using either commands or an interactive graph editor.
 
 MultiBot is designed for the open-source / hobbyist ecosystem and is **Ollama-first**, running locally by default with no cloud dependency unless you explicitly choose one.
 
----
+## Screenshots
 
-## What MultiBot is (in one sentence)
+### Empty start (no living rooms created)
+<img width="1142" height="797" alt="multibot-0" src="https://github.com/user-attachments/assets/e62436ab-f0f4-4bf5-a4e2-c787f815e6ff" />
 
-> **MultiBot lets you host multiple AI agents in a persistent shared room where communication rules are explicit, inspectable, and durable — and where the system stays legible to humans.**
+### Living room with an AI agent writing this readme document
+<img width="1357" height="794" alt="MultiBot-1" src="https://github.com/user-attachments/assets/c89e57e3-5cca-4e0a-90b8-277f0128d311" />
 
----
+### Living room with Advanced Options open
+<img width="1143" height="822" alt="multibot-3" src="https://github.com/user-attachments/assets/348a2090-2b24-4aea-8e0f-597b4bc810f1" />
 
-## Core concepts
+### Link graph viewer/editor
+<img width="1149" height="777" alt="multibot-5" src="https://github.com/user-attachments/assets/75f52112-e15a-4b6b-bc97-80f08eb24bbf" />
 
-### Living rooms (persistent environments)
+### Running a MultiBot program (text adventure)
+<img width="1142" height="825" alt="multibot-2" src="https://github.com/user-attachments/assets/a9d72ad8-a33c-48c2-9316-a63a60114405" />
+
+## Core Concepts
+
+### Living Rooms (Persistent Environments)
 
 Each living room is a durable workspace stored on disk. A room includes:
-
-* a full chat transcript
-* an agent roster (names and models)
-* routing state (who is linked or unlinked)
-* per-room settings and advanced options
-* shared global memory
-* a private user notebook
+- Full chat transcript (`chat_history.jsonl`)
+- Agent roster with models and memories (`participants.json`)
+- Routing state and configuration (`config.json`)
+- Shared global memory (`global_memory.txt`)
+- Private user notebook (`user_notebook.txt`)
+- System prompt override (`system_prompt_override.txt`)
+- Snapshots and configs in subdirectories
 
 Rooms persist across restarts and can be snapshotted or reloaded.
 
----
-
 ### Agents
 
-Agents are named participants bound to specific models.
-
-Each agent can have:
-
-* optional “memories” injected into its system prompt
-* optional per-agent decode overrides
-* independent participation in routing rules
+Agents are named participants bound to specific models. Each agent can have:
+- Optional "memories" injected into its system prompt
+- Optional per-agent decode overrides
+- Independent participation in routing rules
 
 Agents may be renamed or removed without erasing historical transcript lines.
 
----
+### Global Memory (Room)
 
-### Global Memory (room)
+A shared text buffer visible to all agents on every turn (when enabled). Useful for:
+- Shared assumptions and world-building
+- Group goals and project briefs
+- Persistent facts and constraints
 
-A shared text buffer visible to all agents on every turn (when enabled).
+### User Notebook (Private)
 
-This is useful for:
+A per-room notebook saved to disk that is **never sent to agents** unless you paste it manually. Perfect for:
+- Planning and meta-notes
+- Passwords and API keys (though we recommend a proper vault)
+- Reminders to yourself
 
-* shared assumptions
-* group goals
-* persistent facts
-
----
-
-### User Notebook (private)
-
-A per-room notebook saved to disk that is **never sent to agents** unless you paste it manually.
-
-Useful for planning, reminders, or meta-notes.
-
----
-
-### Routing & isolation (the “routing law”)
+### Routing & Isolation (The "Routing Law")
 
 MultiBot enforces **who can see whom** at the transcript and context-construction level.
 
-Supported commands:
+**Routing Commands:**
+- `/unlink BotA BotB` — prevent two agents from seeing each other
+- `/link BotA BotB` — restore communication
+- `/unlink all` — isolate all agents
+- `/link all` — fully connect all agents
+- `/links` — show current routing matrix
 
-* `/unlink BotA BotB`
-* `/link BotA BotB`
-* `/unlink all`
-* `/link all`
-* `/links`
+If two agents are unlinked, they **cannot see or reference each other's messages**, even indirectly. Routing rules are enforced consistently during:
+- Context assembly
+- Transcript visibility
+- @mention invitations
 
-If two agents are unlinked, they **cannot see or reference each other’s messages**, even indirectly.
-
-Routing rules are enforced consistently during:
-
-* context assembly
-* transcript visibility
-* @mention invitations
-
----
-
-### Interactive routing graph
+### Interactive Routing Graph
 
 MultiBot includes a live, interactive routing editor at:
 
 `http://127.0.0.1:8080/graph`
 
 In the graph:
+- Nodes represent agents
+- Edges represent communication links
+- Clicking an edge toggles link/unlink
+- "Unlink All" and "Link All" apply global isolation or restoration
 
-* nodes represent agents
-* edges represent communication links
-* clicking an edge toggles link/unlink
-* “Unlink All” and “Link All” apply global isolation or restoration
-
-Edits apply immediately and **persist to disk**.
-The graph stays synchronized with the room’s actual routing state.
+Edits apply immediately and **persist to disk**. The graph stays synchronized with the room's actual routing state.
 
 Command-line routing commands remain fully supported alongside the graph.
 
----
-
-### Chaining via @mentions (guarded)
+### Chaining via @mentions (Guarded)
 
 Agents may invite other agents using `@AgentName`, but:
+- Routing rules are enforced (no invitation across unlinked pairs)
+- Invite depth is limited (prevents infinite recursion)
+- Isolation is respected (unlinked agents cannot be mentioned)
 
-* routing rules are enforced
-* invite depth is limited
-* isolation is respected
+This prevents accidental context leakage while enabling dynamic conversation flow.
 
-This prevents accidental context leakage.
+### `.txt` Attachments (≤ ~512 KB)
 
----
-
-### `.txt` attachments (≤ ~512 KB)
-
-Uploading a `.txt` file appends its contents to the **next user message only**.
-
-Useful for logs, notes, or documents.
-
----
-
-## Snapshots and configs
-
-MultiBot supports two persistence modes:
-
-* `/save [name]`
-  Saves a snapshot including transcript and room state.
-
-* `/saveconfig [name]`
-  Saves a session configuration (agents, routing, memory, prompt overrides) **without transcript**.
-
-Loading:
-
-* `/load <file>` restores a snapshot into a fresh room (use `/reset` first).
-* `/loadconfig <file>` restores a session config and starts with a clean transcript.
+Uploading a `.txt` file appends its contents to the **next user message only**. Useful for:
+- Logs and debug output
+- Code snippets
+- Documents for discussion
 
 ---
 
@@ -150,15 +119,17 @@ Loading:
 
 ### Requirements
 
-* Python 3.10 or newer
-* Ollama running locally or reachable over LAN
-* Python packages: `flask`, `requests`
+- Python 3.10 or newer
+- Ollama running locally or reachable over LAN
+- Python packages: `flask`, `requests`
 
----
+### Setup (Recommended: Virtual Environment)
 
-### Setup (recommended: virtual environment)
-
-Create and activate a virtual environment using `python3 -m venv .venv`, then install dependencies with `pip install flask requests`.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
 ---
 
@@ -172,31 +143,29 @@ To change the port, run with `PORT=8080 python3 multibot.py`.
 
 ---
 
-## Ollama setup
+## Ollama Setup
 
-### Local Ollama (default)
+### Local Ollama (Default)
 
 MultiBot connects to Ollama at `OLLAMA_HOST`, which defaults to `http://127.0.0.1:11434`.
 
-Click “re-scan models” in the UI to populate the model list.
+Click "re-scan models" in the UI to populate the model list.
+
+### Ollama on Another Machine (LAN)
+
+Set `OLLAMA_HOST` to the LAN machine's address:
+```bash
+export OLLAMA_HOST=http://192.168.1.50:11434
+python3 multibot.py
+```
+
+### Ollama API Reference
+
+See [https://docs.ollama.com/api/introduction](https://docs.ollama.com/api/introduction)
 
 ---
 
-### Ollama on another machine (LAN)
-
-Set `OLLAMA_HOST` to the LAN machine’s address, for example:
-
-`OLLAMA_HOST=http://192.168.1.50:11434`
-
----
-
-### Ollama API reference
-
-See `https://docs.ollama.com/api/introduction`.
-
----
-
-## Core chat commands
+## Core Chat Commands
 
 * `/stop` — stop generation
 * `/reset` — start a fresh chain
@@ -219,32 +188,34 @@ Routing commands:
 
 Each room has a built-in system prompt, but you may override it:
 
-* open Advanced Options
-* edit “System Prompt Override”
-* save
+1. Open Advanced Options
+2. Edit "System Prompt Override"
+3. Save
 
 The override is:
-
-* stored on disk with the room
-* included in `/saveconfig` bundles
+- Stored on disk with the room
+- Included in `/saveconfig` bundles
 
 Clearing the box restores the default prompt.
 
 ---
 
-## Persistence and file layout
+## Persistence and File Layout
 
 All data lives under `ENV_DIR` (default: `envs/`).
 
 Each room directory contains:
-
-* `chat_history.jsonl` — append-only transcript
-* `participants.json` — agents, models, memories
-* `config.json` — room settings including routing state
-* `global_memory.txt` — shared memory
-* `user_notebook.txt` — private notes
-* `system_prompt_override.txt` — optional override
-* `snapshots/` and `configs/` subdirectories
+```
+room_name/
+├── chat_history.jsonl          # Append-only transcript
+├── participants.json           # Agents, models, memories
+├── config.json                 # Room settings, routing state
+├── global_memory.txt           # Shared memory
+├── user_notebook.txt           # Private notes
+├── system_prompt_override.txt  # Optional override
+├── snapshots/                  # Saved snapshots
+└── configs/                    # Saved configs
+```
 
 Global folders `_snapshots/` and `_configs/` are also maintained.
 
@@ -253,27 +224,61 @@ Global folders `_snapshots/` and `_configs/` are also maintained.
 ## Troubleshooting
 
 **No models listed**
-Confirm Ollama is running and reachable at `OLLAMA_HOST`.
-Check that `http://OLLAMA_HOST/api/tags` responds.
+- Confirm Ollama is running and reachable at `OLLAMA_HOST`.
+- Check that `http://OLLAMA_HOST/api/tags` responds.
 
 **`/load` fails**
-Snapshots load only into a fresh room. Use `/reset` first.
+- Snapshots load only into a fresh room. Use `/reset` first.
 
 **Routing confusion**
-Use `/links` or open the routing graph.
-Remember: unlink rules are enforced strictly at the context level.
+- Use `/links` or open the routing graph.
+- Remember: unlink rules are enforced strictly at the context level.
+
+**Port already in use**
+```bash
+PORT=8081 python3 multibot.py
+```
+
+**Large attachments fail**
+- Ensure file is ≤ 512 KB
+- Check file extension is `.txt`
+- Verify disk space in `envs/` directory
 
 ---
 
-## Design philosophy
+## MultiBot Programs
+
+MultiBot rooms and configurations can function as reusable programs.
+Examples include:
+
+- AI-moderated text adventures
+- Collaborative world-building environments
+- Multi-agent research sandboxes
+- Teaching demos and classroom simulations
+
+Programs are typically shared as room snapshots or config bundles and can be loaded into fresh rooms.
+
+---
+
+## Design Philosophy
 
 MultiBot is intentionally:
 
-* local-first
-* explicit
-* inspectable
-* human-legible
+- **Local-first**: No cloud dependency unless you choose it
+- **Explicit**: Routing, memory, and state are first-class concepts
+- **Inspectable**: All state is human-readable on disk
+- **Human-legible**: The system is designed to be understood, not just used
 
-Routing, memory, and state are not hidden abstractions — they are **first-class concepts**.
+Routing, memory, and state are not hidden abstractions — they are **first-class concepts** you can see, edit, and audit.
 
 MultiBot is meant not just for experimentation, but for thinking carefully about how multi-agent systems should live alongside people.
+
+---
+
+## Version
+
+MultiBot 1.0 (Beta)
+
+---
+
+*Built for the open-source AI community*

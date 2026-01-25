@@ -15,7 +15,7 @@ MultiBot is designed for the open-source / hobbyist ecosystem and is **Ollama-fi
 ### Empty start (no living rooms created)
 <img width="1142" height="797" alt="multibot-0" src="https://github.com/user-attachments/assets/e62436ab-f0f4-4bf5-a4e2-c787f815e6ff" />
 
-### Living room with an AI agent writing this readme document
+### Living room with an AI agent writing this README document
 <img width="1357" height="794" alt="MultiBot-1" src="https://github.com/user-attachments/assets/c89e57e3-5cca-4e0a-90b8-277f0128d311" />
 
 ### Living room with Advanced Options open

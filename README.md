@@ -6,7 +6,7 @@ A local-first, multi-agent LLM "living room" with explicit routing and persisten
 
 MultiBot is a lightweight, browser-based app for running multiple large-language-model (LLM) agents together in a shared **living room**, where memory, identity, and communication rules persist over time.
 
-Unlike typical "multi-agent demos," MultiBot makes **routing explicit and enforceable**: you can see, edit, and audit who can talk to whom — live — using either commands or an interactive graph editor.
+MultiBot makes **routing explicit and enforceable**: you can see, edit, and audit who can talk to whom — live — using either commands or an interactive graph editor.
 
 MultiBot is designed for the open-source / hobbyist ecosystem and is **Ollama-first**, running locally on your home computer with no cloud dependency unless you explicitly choose one.
 

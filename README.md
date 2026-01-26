@@ -279,7 +279,7 @@ MultiBot is meant not just for experimentation, but for thinking carefully about
 ## Developers
 **MultiBot** is developed by **Underground AI** for the open-source AI community. It is programmed by **Shane Oberloier** and **Robert Schneider**, with multi-agent orchestration designed by **Maxwell Schneider**, and coding assistance from a number of LLMs including **OpenAI's ChatGPT 5.1/5.2** and open-source **GPT-OSS** models, **AliBaba's** open-source **Qwen3**, and **Moonshot's** open-source **Kimi-K2**. 
 
-**Underground AI** is a **collective** of programmers, artists, engineers, mathematicians, writers, musicians, hackers, and **dreamers.** We believe artificial intelligence is a **public resource** that should be **freely available, clean, ethical, sustainable,** and **community based** — and should **return benefit** and **provide substantial support** to the **creative, cultural and  coding communities** whose **ideas** form the **heart of AI.**
+**Underground AI** is a **collective** of programmers, artists, engineers, mathematicians, writers, musicians, hackers, and **dreamers.** We believe artificial intelligence is a **public resource** that should be **freely available, clean, ethical, sustainable,** and **community based** — and must **return benefit** and **provide substantial support** to the **creative, cultural and  coding communities** whose **ideas** form the **heart of AI.**
 
 ---
 
